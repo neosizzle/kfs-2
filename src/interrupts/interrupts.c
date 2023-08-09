@@ -56,10 +56,11 @@ void isr_handler(cpu_state cpu, uint32_t intr_no, uint32_t err_code, stack_state
 
 	char *msg = messages[intr_no];
 	char *msg2 = messages[err_code];
+	(void) msg2;
 
 	terminal_writestring(msg);
-	terminal_writestring("\n");
-	terminal_writestring(msg2);
+	terminal_writestring(" \n");
+	// terminal_writestring(msg2);
 	// while (1)
 	// {
 		

@@ -1,7 +1,9 @@
 #include "video.h"
 #include "printk.h"
 #include "screen.h"
+#include "string.h"
 
+extern void reboot();
 char console_buff[1024];
 int console_buff_idx;
 
@@ -66,7 +68,18 @@ void console_add_to_buff(char c)
 int console_process_buff(void)
 {
 	int curr_screen = get_curr_screen();
+	char *input = console_inputs[curr_screen].console_buff;
 
+	if (!strcmp(input, "halt"))
+	{
+		__asm__ ("hlt");
+		return 0;
+	}
+	if (!strcmp(input, "reboot"))
+	{
+		__asm__ ("ljmpw $0xFFFF, $0x0000");
+		return 0;
+	}
 	printk("\n%s\n", console_inputs[curr_screen].console_buff);
 	return 0;
 }
