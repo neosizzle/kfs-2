@@ -34,6 +34,25 @@ void itoa(int n, char s[])
     reverse(s);
 }
 
+void itoa_hex(int n, char s[])
+{
+    char *digits = "0123456789ABCDEF";
+    int i, sign;
+
+    if ((sign = n) < 0)  /* record sign */
+        n = -n;          /* make n positive */
+    i = 0;
+    do {       /* generate digits in reverse order */
+        s[i++] = digits[n % 16];   /* get next digit */
+    } while ((n /= 16) > 0);     /* delete it */
+    if (sign < 0)
+        s[i++] = '-';
+    s[i++] = 'x';
+    s[i++] = '0';
+    s[i] = '\0';
+    reverse(s);
+}
+
 int	strncmp(const char *s1, const char *s2, int n)
 {
 	if (!n)

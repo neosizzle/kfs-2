@@ -34,6 +34,14 @@ void printk(char *str, ...)
 				char _char = (char)*(char *)va_idx;
 				terminal_putchar(_char, VGA_COLOR_LIGHT_GREY);
 			}
+			else if (str[i + 1] == 'x')
+			{
+				va_idx += 1;
+				int num = (int)*(int **)(va_idx);
+
+				itoa_hex(num, int_str);
+				terminal_writestring(int_str);
+			}
 			else
 				terminal_putchar('?', VGA_COLOR_LIGHT_GREY);
 			++i;
