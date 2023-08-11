@@ -54,7 +54,7 @@ init_gdt:
     mov fs, ax
     mov gs, ax
 
-	mov ax, STACK_SEG ; 5. update the segment registers
+	mov ax, STACK_SEG ; 5. update the stack segment
 	mov ss, ax
 
 	jmp CODE_SEG:flush_cs  ; specify cs when jumping to flush_cs, far jump
