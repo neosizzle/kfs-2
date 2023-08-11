@@ -10,6 +10,11 @@ section .multiboot
 section .text
 	global _entry
 
+	; load gdt
+	; %include "boot/gdt.s"
+	extern init_gdt
+	call init_gdt
+
 	extern kernel_main
 	_entry:
 		mov esp, stack_top

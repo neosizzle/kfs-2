@@ -2,12 +2,13 @@
 # CONSTANTS #
 #############
 NAME = kfs.bin
-BOOT_SRCS = boot/boot.s
-BOOT_FLAGS = -f elf32
+BOOT_SRCS = boot/gdt.s boot/boot.s 
+BOOT_FLAGS = -f bin
 KERNEL_SRCS += src/entry.c src/video/video.c src/interrupts/interrupts.c src/interrupts/idt.c \
 			src/io/io.c src/string/string.c src/printk/printk.c src/keyboard/keyboard.c \
 			src/console/console.c src/screen/screen.c
 KERNEL_SRCS_ASM += src/interrupts/asm/handler-defs.s 
+KERNEL_SRCS_ASM_FLAGS = -f elf32
 KERNEL_FLAGS = -m32 -c -std=gnu99 -fno-builtin -fno-exceptions -fno-stack-protector -nostdlib -nodefaultlibs -Wno-override-init -Wall -Wextra
 KERNEL_INCS += -I src/ -I src/interrupts/ -I src/io/ -I src/string/ -I src/video/ -I src/printk/ \
 				-I src/keyboard	-I src/console -I src/screen
@@ -81,7 +82,12 @@ build/%.o : ${OBJS}
 
 .s.o :
 	@echo "${GREEN}📇  Assembling $<..${NC}"
-	@nasm ${BOOT_FLAGS} $< -o ${BUILDDIR}${subst /,_,$@}
+# this not needed?
+	@bash -c 'if [[ "${BOOT_SRCS}" == *"$<" ]]; then \
+            nasm ${BOOT_FLAGS} $< -o ${BUILDDIR}${subst /,_,$@}; \
+        else \
+            nasm ${KERNEL_SRCS_ASM_FLAGS} $< -o ${BUILDDIR}${subst /,_,$@}; \
+        fi'
 
 clean: 
 	@rm -rf build/*.o
