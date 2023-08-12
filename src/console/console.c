@@ -4,7 +4,7 @@
 #include "string.h"
 
 extern void reboot();
-extern int gdt_start;
+// extern int gdt_start;
 char console_buff[1024];
 int console_buff_idx;
 
@@ -83,7 +83,7 @@ int console_process_buff(void)
 	}
 	if (!strcmp(input, "gdt"))
 	{
-		printk("\n%x\n", &gdt_start);
+		// printk("\n%x\n", &gdt_start);
 		return 0;
 	}
 	printk("\n%s\n", console_inputs[curr_screen].console_buff);

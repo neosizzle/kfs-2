@@ -60,7 +60,7 @@ void isr_handler(cpu_state cpu, uint32_t intr_no, uint32_t err_code, stack_state
 
 	terminal_writestring(msg);
 	terminal_writestring(" \n");
-	// terminal_writestring(msg2);
+	terminal_writestring(msg2);
 	// while (1)
 	// {
 		
@@ -104,6 +104,8 @@ void disable_interrupts(void)
 // entry calls this to init the interrupt subsystem
 void init_interrupts()
 {
+	// printk(""); //what the fuck?
+
 	// isr
 	create_idt_entry(0, (uint32_t)isr_handler_0);
 	create_idt_entry(1, (uint32_t)isr_handler_1);

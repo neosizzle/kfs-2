@@ -5,12 +5,16 @@
 #include "video.h"
 #include "printk.h"
 #include "console.h"
+#include "gdt.h"
 
 void kernel_main(void) 
 {
+	/* Init GDT*/
+	init_gdt();
+
 	/* Initialize terminal interface */
 	terminal_initialize();
- 
+
 	/* Print banner */
 	printk("%s %c%d!\n", "Hello", '4', 2);
 

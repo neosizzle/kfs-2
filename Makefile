@@ -7,7 +7,7 @@ BOOT_FLAGS = -f bin
 KERNEL_SRCS += src/entry.c src/video/video.c src/interrupts/interrupts.c src/interrupts/idt.c \
 			src/io/io.c src/string/string.c src/printk/printk.c src/keyboard/keyboard.c \
 			src/console/console.c src/screen/screen.c src/gdt/gdt.c
-KERNEL_SRCS_ASM += src/interrupts/asm/handler-defs.s 
+KERNEL_SRCS_ASM += src/interrupts/asm/handler-defs.s src/gdt/asm/install_gdt.s 
 KERNEL_SRCS_ASM_FLAGS = -f elf32
 KERNEL_FLAGS = -m32 -c -std=gnu99 -fno-builtin -fno-exceptions -fno-stack-protector -nostdlib -nodefaultlibs -Wno-override-init -Wall -Wextra
 KERNEL_INCS += -I src/ -I src/interrupts/ -I src/io/ -I src/string/ -I src/video/ -I src/printk/ \

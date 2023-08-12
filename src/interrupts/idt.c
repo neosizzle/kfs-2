@@ -13,7 +13,7 @@ void create_idt_entry(int index, uint32_t handler)
     __asm__ ("mov %%cs, %0" : "=r" (cs));
 
 	idt_entries[index].offset_low = low_16(handler);
-	idt_entries[index].segment_sel = cs;
+	idt_entries[index].segment_sel = 0x08; // TODO dev
 	idt_entries[index].always_zero = 0;
 	idt_entries[index].flags = 0x8E; // 10001110 -> P = 1, DPL = 00, 0 = 0, GATE = 1110
 	idt_entries[index].offset_high = high_16(handler);
