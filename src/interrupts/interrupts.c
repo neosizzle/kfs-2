@@ -47,6 +47,18 @@ char *messages[] = {
     "Reserved"
 };
 
+// enable hardware interrupts
+void enable_interrupts(void)
+{
+	__asm__ __volatile__("sti");
+}
+
+// disable hardware interrupts
+void disable_interrupts(void)
+{
+	__asm__ __volatile__("cli");
+}
+
 // function to handle all software interrupts
 void isr_handler(cpu_state cpu, uint32_t intr_no, uint32_t err_code, stack_state stack)
 {
@@ -89,23 +101,10 @@ void irq_handler(cpu_state cpu, uint32_t intr_no, uint32_t err_code, stack_state
 	enable_interrupts();
 }
 
-// enable hardware interrupts
-void enable_interrupts(void)
-{
-	__asm__ __volatile__("sti");
-}
-
-// disable hardware interrupts
-void disable_interrupts(void)
-{
-	__asm__ __volatile__("cli");
-}
 
 // entry calls this to init the interrupt subsystem
 void init_interrupts()
 {
-	// printk(""); //what the fuck?
-
 	// isr
 	create_idt_entry(0, (uint32_t)isr_handler_0);
 	create_idt_entry(1, (uint32_t)isr_handler_1);

@@ -1,6 +1,6 @@
 #include "gdt.h"
 
-extern void install_gdt(uint32_t ptr);
+extern void install_gdt(void);
 
 gdt_entry gdt_entries[GDT_ENTRIES];
 gdt_table *_gdt_table = (gdt_table *)GDT_ADDR;
@@ -9,8 +9,8 @@ void register_gdt(void)
 {
     _gdt_table->base = (uint32_t) &gdt_entries;
     _gdt_table->limit = (GDT_ENTRIES * sizeof(gdt_entries)) - 1;
-    // __asm__ __volatile__("lgdtl (%0)" : : "r" (&gdt_entries));
-    install_gdt((uint32_t)_gdt_table);
+    __asm__ __volatile__("lgdtl (%0)" : : "r" (_gdt_table));
+    install_gdt();
 }
 
 void create_gdt_entry(int idx, uint32_t seg_limit, uint32_t base, uint8_t access, uint8_t attribs_high)

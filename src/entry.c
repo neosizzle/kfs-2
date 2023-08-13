@@ -23,7 +23,7 @@ void kernel_main(void)
 
 	/* Initialize interrupts */
 	init_interrupts();
-
+	
 	/* Enable interrupts */
 	enable_interrupts();
 

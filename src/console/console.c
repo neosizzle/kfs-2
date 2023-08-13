@@ -2,9 +2,9 @@
 #include "printk.h"
 #include "screen.h"
 #include "string.h"
+#include "gdt.h"
 
 extern void reboot();
-// extern int gdt_start;
 char console_buff[1024];
 int console_buff_idx;
 
@@ -83,7 +83,26 @@ int console_process_buff(void)
 	}
 	if (!strcmp(input, "gdt"))
 	{
-		// printk("\n%x\n", &gdt_start);
+		printk("\n%x\n", (uint32_t)_gdt_table);
+		return 0;
+	}
+	if (!strcmp(input, "kstack"))
+	{
+		// print 16 rows of 8 bytes of stack
+		uint8_t *stack_addr = (uint8_t *) GDT_ADDR - 0x20;
+
+		printk("\n");
+		for (int i = 0; i < 16; i++)
+		{
+			printk_color(VGA_COLOR_LIGHT_BLUE, "%x:", stack_addr);
+			for (int j = 0; j < 8; j++)
+			{
+				printk(" %x ", *stack_addr);
+				++stack_addr;
+			}
+			printk("\n");
+		}
+		
 		return 0;
 	}
 	printk("\n%s\n", console_inputs[curr_screen].console_buff);

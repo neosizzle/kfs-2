@@ -1,10 +1,6 @@
 global install_gdt:
 
 install_gdt :
-	; load gdt
-	mov eax, [esp + 4]
-	lgdt [eax]
-
 	; set segment registers
 	mov ax, 0x10 ; data segment offset
     mov ds, ax
